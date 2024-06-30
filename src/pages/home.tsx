@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { CiLogin } from "react-icons/ci";
 import { Link } from 'react-router-dom';
+import { SlDocs } from "react-icons/sl";
 
 export default function HomePage() {
   return (
@@ -11,6 +12,7 @@ export default function HomePage() {
           <div className="flex flex-col items-center text-center">
             <div className="flex items-center">
               <h1 className="mr-3 md:text-5xl text-3xl font-semibold">Paperly-Ai</h1>
+
             </div>
 
             <p className="max-w-xl mt-1 text-lg text-slate-600">
@@ -18,13 +20,18 @@ export default function HomePage() {
               answer questions and understand research with AI
             </p>
 
-            <div className="w-full mt-4">
+            <div className="w-full mt-4 flex items-center justify-center gap-2">
+              <Button>
+                Docs
+                <SlDocs className="w-4 h-4 ml-2" />
+              </Button>
               <Link to="/sign-in">
                 <Button>
                   Login to get Started!
                   <CiLogin className="w-4 h-4 ml-2" />
                 </Button>
               </Link>
+
             </div>
           </div>
         </div>
