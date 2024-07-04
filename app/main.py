@@ -3,6 +3,7 @@ from fastapi.responses import StreamingResponse
 import os
 from dotenv import load_dotenv
 import google.generativeai as genai
+from app.routes import document_processing
 
 load_dotenv()
 
@@ -16,10 +17,12 @@ app = FastAPI(
 )
 
 def generate_responses():
-    response = model.generate_content("What is the meaning of life?", stream=True)
+    response = model.generate_content("What is a chatbot?", stream=True)
     for chunk in response:
         print(chunk.text)
         yield f"data: {chunk.text}\n\n"
+
+app.include_router(document_processing.router, prefix="/pdf_chat", tags=["pdf_chat"])
 
 @app.get("/get-response")
 async def get_response():
