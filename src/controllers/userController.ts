@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import * as userService from '../services/userService';
+import user from '../models/user';
 
 export async function createUser(req: Request, res: Response): Promise<void> {
   try {
@@ -36,7 +37,8 @@ export async function getUserById(req: Request, res: Response): Promise<void> {
 
 export async function deleteUser(req: Request, res: Response): Promise<void> {
   try {
-    await userService.deleteUser(req.params.id);
+    const userId = res.locals.user.userId;
+    await userService.deleteUser(userId);
     res.status(204).end();
   } catch (error: any) {
     res.status(500).json({ message: error.message });
