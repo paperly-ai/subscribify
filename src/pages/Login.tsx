@@ -1,9 +1,12 @@
 import { Button } from '@/components/ui/button'
 import { UserAuthForm } from '@/components/userLoginForm'
+import { useAuth } from '@/hooks/useAuth'
 import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 
 
 export default function LoginPage() {
+  const { } = useAuth();
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -12,6 +15,7 @@ export default function LoginPage() {
 
     if (error) {
       setError(decodeURIComponent(error))
+      toast.error(decodeURIComponent(error));
     }
 
     window.history.replaceState({}, '', window.location.pathname)

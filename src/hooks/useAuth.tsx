@@ -22,6 +22,7 @@ export function useAuth() {
       const accessToken = getAccessToken()
       const decodedAccessToken = jwtDecode<IUser>(accessToken)
       setUser(decodedAccessToken)
+      navigation('/chat')
     } catch (error) {
       handleFetchError(error)
     } finally {

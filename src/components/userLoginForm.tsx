@@ -9,19 +9,32 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { FaUser } from "react-icons/fa";
 import toast from "react-hot-toast"
+import { loginUser } from "@/api/auth"
+import { useNavigate } from "react-router-dom"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
+  const [errorMessage, setErrorMessage] = React.useState(null);
   const [userDetails, setUserDetails] = React.useState({
     email: '',
-    passowrd: ''
+    password: ''
   })
   const guestCredentials = {
     email: 'guest@gmail.com',
-    passowrd: 'guest@paperly-ai'
+    password: 'guest@paperly-ai'
   }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setUserDetails(prevState => ({
+      ...prevState,
+      [id]: value
+    }));
+  };
+
 
   const getGuestCredentials = () => {
     setUserDetails(guestCredentials);
@@ -33,10 +46,20 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   async function onSubmit(event: React.SyntheticEvent) {
     event.preventDefault()
     setIsLoading(true)
-
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 3000)
+    try {
+      setErrorMessage(null);
+      const result = await loginUser(userDetails.email, userDetails.password);
+      if (result) {
+        navigate('/chat')
+      }
+    }
+    catch (error: any) {
+      toast.error("Error while login");
+      setErrorMessage(error.message);
+    }
+    finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -56,6 +79,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               autoComplete="email"
               autoCorrect="off"
               disabled={isLoading}
+              onChange={handleInputChange}
             />
           </div>
           <div className="grid gap-1">
@@ -65,11 +89,12 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             <Input
               id="password"
               placeholder="*******"
-              value={userDetails.passowrd}
+              value={userDetails.password}
               type="password"
               autoCapitalize="none"
               autoCorrect="off"
               disabled={isLoading}
+              onChange={handleInputChange}
             />
           </div>
           <Button disabled={isLoading}>
@@ -78,6 +103,9 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             )}
             Sign In with Email
           </Button>
+        </div>
+        <div>
+          {errorMessage && <p className="text-sm text-center mt-2 text-red-600">{errorMessage}</p>}
         </div>
       </form>
       <div className="relative">
