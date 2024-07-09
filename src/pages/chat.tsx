@@ -4,6 +4,7 @@ import ChatSideBar from "@/components/chatsidebar";
 import { Chats } from "@/constants/constants";
 import React, { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import DefaultChatScreen from "@/components/defaultChatScreen";
 
 type Props = {
   params: {
@@ -43,25 +44,18 @@ const _chats: Chats[] = [
   //   createdAt: new Date("2024-06-04T11:45:00Z"),
   //   userId: "user321",
   //   fileKey: "file-key-004",
-  // },
+  // }
+  // , {
+  //   id: 8,
+  //   pdfName: "Database Design Basics",
+  //   pdfUrl: "https://example.com/pdf/database-design-basics.pdf",
+  //   createdAt: new Date("2024-06-07T08:30:00Z"),
+  //   userId: "user159",
+  //   fileKey: "file-key-007",
+  // }
+  // ,
   // {
-  //   id: 5,
-  //   pdfName: "Getting Started with React",
-  //   pdfUrl: "https://example.com/pdf/getting-started-react.pdf",
-  //   createdAt: new Date("2024-06-05T13:20:00Z"),
-  //   userId: "user654",
-  //   fileKey: "file-key-005",
-  // },
-  // {
-  //   id: 6,
-  //   pdfName: "Introduction to Python Programming",
-  //   pdfUrl: "https://example.com/pdf/intro-to-python.pdf",
-  //   createdAt: new Date("2024-06-06T16:00:00Z"),
-  //   userId: "user987",
-  //   fileKey: "file-key-006",
-  // },
-  // {
-  //   id: 7,
+  //   id: 9,
   //   pdfName: "Database Design Basics",
   //   pdfUrl: "https://example.com/pdf/database-design-basics.pdf",
   //   createdAt: new Date("2024-06-07T08:30:00Z"),
@@ -83,12 +77,13 @@ const ChatPage = () => {
           <ChatSideBar chats={_chats} chatId={id} isPro={false} user={user} logout={logout} />
         </div>
         {/* pdf viewer */}
-        <div className="max-h-screen p-4 oveflow-scroll flex-[3]">
+        {/* <div className="max-h-screen p-4 oveflow-scroll flex-[3]">
           <PDFViewer pdf_url={pdf_url || ""} />
-        </div>
+        </div> */}
         {/* chat component */}
         <div className="flex-[3] border-l-4 border-l-slate-200">
-          <ChatComponent chatId={id} />
+          <DefaultChatScreen />
+          {/* <ChatComponent chatId={id} /> */}
         </div>
       </div>
     </div>
