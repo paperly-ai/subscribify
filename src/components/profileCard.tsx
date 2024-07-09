@@ -17,7 +17,7 @@ export const ProfileCard = ({ user, logout }: Props) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <div className="flex items-center hover:cursor-pointer select-none justify-center gap-3">
+        <div className="flex items-center  border-t pt-2 hover:cursor-pointer select-none justify-center gap-3">
           <p className=" h-10 w-10 flex items-center bg-gray-800 text-white justify-center rounded-full border">
             {user?.userName[0]}
           </p>
