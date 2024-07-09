@@ -1,10 +1,11 @@
 import { jwtDecode } from 'jwt-decode'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 
 export interface IUser {
   userId: string
-  userIdEmails: string
+  userEmail: string
   userName: string
 }
 
@@ -22,6 +23,7 @@ export function useAuth() {
       const accessToken = getAccessToken()
       const decodedAccessToken = jwtDecode<IUser>(accessToken)
       setUser(decodedAccessToken)
+
       navigation('/chat')
     } catch (error) {
       handleFetchError(error)
@@ -58,6 +60,7 @@ export function useAuth() {
   const logout = () => {
     localStorage.removeItem('accessToken')
     setUser(null)
+    toast.success("Logout successfull")
     navigation('/login')
   }
 

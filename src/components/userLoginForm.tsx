@@ -50,6 +50,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       setErrorMessage(null);
       const result = await loginUser(userDetails.email, userDetails.password);
       if (result) {
+        toast.success("Login Successfull")
         navigate('/chat')
       }
     }

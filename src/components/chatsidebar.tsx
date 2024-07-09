@@ -2,35 +2,33 @@
 import { Link } from "react-router-dom";
 import React from "react";
 import { Button } from "./ui/button";
-import { MessageCircle, PlusCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
-// import axios from "axios";
-import SubscriptionButton from "./SubscriptionButton";
+import { UploadDialog } from "./uploadDialog";
 import { Chats } from "@/constants/constants";
 import { BsStars } from "react-icons/bs";
+
+import { IUser } from "@/hooks/useAuth";
+import { ProfileCard } from "./profileCard";
 
 type Props = {
   chats: Chats[];
   chatId: number;
   isPro: boolean;
+  user: IUser | null;
+  logout: () => void;
 };
 
-const ChatSideBar = ({ chats, chatId, isPro }: Props) => {
+const ChatSideBar = ({ chats, chatId, isPro, user, logout }: Props) => {
   const [loading, setLoading] = React.useState(false);
 
 
   return (
-    <div className="w-full min-h-screen overflow-scroll soff p-4 text-gray-800 border-r">
-
+    <div className="w-full min-h-screen min-w-72 flex flex-col justify-between overflow-scroll soff p-4 text-gray-800 border-r">
       <div className="flex flex-col gap-2">
+        <UploadDialog />
         <Link to="/">
-          <Button variant="outline" className="w-full   border">
-            <PlusCircle className="mr-2 w-4 h-4" />
-            New Chat
-          </Button>
-        </Link>
-        <Link to="/">
-          <Button variant="ghost" className="w-full   border">
+          <Button className="w-full   border">
             <BsStars className="mr-2 w-4 h-4" />
             Get Pro
           </Button>
@@ -38,6 +36,9 @@ const ChatSideBar = ({ chats, chatId, isPro }: Props) => {
       </div>
 
       <div className="flex max-h-screen overflow-scroll pb-20 flex-col gap-2 mt-4">
+        {chats.length == 0 && <div className="flex h-96 items-center justify-center">
+          <p className="text-sm"> You have'nt uploaded anything ,Upload a pdf document by clicking on new chat on top</p>
+        </div>}
         {chats.map((chat) => (
           <Link key={chat.id} to={`/chat/${chat.id}`}>
             <div
@@ -53,6 +54,9 @@ const ChatSideBar = ({ chats, chatId, isPro }: Props) => {
             </div>
           </Link>
         ))}
+      </div>
+      <div>
+        <ProfileCard user={user} logout={logout} />
       </div>
     </div>
   );
