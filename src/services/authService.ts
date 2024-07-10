@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import User, { IUser } from '../models/user';
 import { generateAccessToken, generateRefreshToken, verifyAccessToken, verifyRefreshToken } from './jwtService';
+import * as userService from './userService';
 
 export async function login(email: string, password: string): Promise<{ accessToken: string; refreshToken: string }> {
   try {
@@ -24,6 +25,21 @@ export async function login(email: string, password: string): Promise<{ accessTo
     throw error;
   }
 }
+
+export async function signup(userData: IUser): Promise<{ accessToken: string; refreshToken: string }> {
+  try {
+
+    const user = await userService.createUser(userData);
+    const accessToken = generateAccessToken(user);
+    const refreshToken = generateRefreshToken(user);
+
+    return { accessToken, refreshToken };
+  } catch (error) {
+    throw error;
+  }
+}
+
+
 
 export async function refreshTokens(req: Request): Promise<{ accessToken: string; refreshToken: string }> {
   try {

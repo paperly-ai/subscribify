@@ -11,6 +11,16 @@ export async function login(req: Request, res: Response): Promise<void> {
   }
 }
 
+export async function signup(req: Request, res: Response): Promise<void> {
+  const userData = req.body;
+  try {
+    const tokens = await authService.signup(userData);
+    res.status(200).json(tokens);
+  } catch (error: any) {
+    res.status(401).json({ message: error.message });
+  }
+}
+
 export async function refreshTokens(req: Request, res: Response): Promise<void> {
   try {
     const tokens = await authService.refreshTokens(req);
