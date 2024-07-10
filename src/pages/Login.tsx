@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { UserAuthForm } from '@/components/userLoginForm'
+import { UserSignUpForm } from '@/components/userSignUpForm'
 import { useAuth } from '@/hooks/useAuth'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -7,7 +8,12 @@ import toast from 'react-hot-toast'
 
 export default function LoginPage() {
   const { } = useAuth();
+  const [authForm, setAuthForm] = useState(true);
   const [error, setError] = useState<string | null>(null)
+
+  const toggleForms = () => {
+    setAuthForm(!authForm);
+  }
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -42,11 +48,12 @@ export default function LoginPage() {
         </div>
         <Button
           variant={'ghost'}
+          onClick={toggleForms}
           className={
             "absolute right-4 top-4 md:right-8 md:top-8"
           }
         >
-          Signup
+          {authForm ? "Signup" : "Login"}
         </Button>
         <div className="flex h-screen items-center justify-center lg:p-8">
           <div className="mx-auto flex w-full flex-col justify-center space-y-10 sm:w-[500px]">
@@ -63,7 +70,8 @@ export default function LoginPage() {
 
             </div>
 
-            <UserAuthForm />
+            {authForm ? <UserAuthForm /> : <UserSignUpForm />}
+
 
             <p className="px-8 text-center text-sm text-muted-foreground">
               By continuing, you are indicating that you accept our Terms of

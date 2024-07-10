@@ -10,7 +10,7 @@ function App() {
       <Toaster />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/auth" element={<LoginPage />} />
         {/* <Route path="/upload-pdf" element={<Dropzone onFileUpload={handleFileUpload} />} /> */}
         <Route path="/chat" element={<ChatPage />} />
       </Routes>

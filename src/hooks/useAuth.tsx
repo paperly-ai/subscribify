@@ -54,14 +54,14 @@ export function useAuth() {
 
   const handleFetchError = (error: any) => {
     setError('Error fetching user data: ' + error)
-    navigation('/login')
+    navigation('/auth')
   }
 
   const logout = () => {
     localStorage.removeItem('accessToken')
     setUser(null)
     toast.success("Logout successfull")
-    navigation('/login')
+    navigation('/auth')
   }
 
   useEffect(() => {
