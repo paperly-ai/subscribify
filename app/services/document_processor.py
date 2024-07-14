@@ -26,4 +26,4 @@ class DocumentProcessor:
     def embed_text(self,file_path):
         document_text=self.__get_document_text(file_path=file_path)
         text_chunks=self.__get_text_chunks(document_text)
-        return self.embeddings.embed_text(text_chunks)
+        return self.embeddings.embed_documents(text_chunks)

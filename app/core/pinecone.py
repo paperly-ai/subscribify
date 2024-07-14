@@ -1,27 +1,18 @@
-import pinecone
 from app.core.config import settings
-
-import os
 from pinecone import Pinecone, ServerlessSpec
-
-
-
-
-    
-
-
-
-def init_pinecone():
-    index_name = "pdf-chat-index"
+def init_pinecone(dimensions):
+    index_name = "pdf-chat"
 
     pc = Pinecone(
     api_key=settings.PINECONE_API_KEY
     )
 
-    if 'pdf-chat-index' not in pc.list_indexes().names():
+    print(dimensions)
+
+    if 'pdf-chat' not in pc.list_indexes().names():
         pc.create_index(
-            name='pdf-chat-index', 
-            dimension=1536, 
+            name='pdf-chat', 
+            dimension=dimensions, 
             metric='euclidean',
             spec=ServerlessSpec(
                 cloud='aws',
@@ -31,4 +22,15 @@ def init_pinecone():
         
     return pc.Index(index_name)
 
-pinecone_index = init_pinecone()
+def get_pinecone():
+    index_name = "pdf-chat"
+
+    pc = Pinecone(
+    api_key=settings.PINECONE_API_KEY
+    )
+        
+    return pc.Index(index_name)
+
+
+
+
