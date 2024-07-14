@@ -5,12 +5,14 @@ from app.schemas import schema
 
 router = APIRouter()
 
+def pad_vector(vector, target_dim):
+    """Pads the vector with zeros to reach the target dimension."""
+    return vector + [0.00] * (target_dim - len(vector))
+
 @router.post("/upsert_pdf")
 async def upsert_pdf(request: schema.UpsertPDFRequest):
     processor=DocumentProcessor()
-    vector = processor.embed_text(request.documet_url)
-    vectors=vector[0]
-    dimension=len(vectors)
-    pinecone_index = init_pinecone(dimensions=dimension)
-    pinecone_index.upsert([(f"{request.user_id}-{request.document_id}", vectors)])
-    return {"message": "PDF vector upserted successfully"}
+    vector = processor.embed_text(request.document_url)
+    pinecone_index = init_pinecone()
+    pinecone_index.upsert(vectors=vector,namespace=request.document_id)
+    return vector

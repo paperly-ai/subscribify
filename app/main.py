@@ -4,6 +4,7 @@ import os
 from dotenv import load_dotenv
 import google.generativeai as genai
 from app.routes import document_processing
+from app.routes import query_document
 
 load_dotenv()
 
@@ -22,7 +23,8 @@ def generate_responses():
         print(chunk.text)
         yield f"data: {chunk.text}\n\n"
 
-app.include_router(document_processing.router, prefix="/pdf_chat", tags=["pdf_chat"])
+app.include_router(document_processing.router, prefix="/process_pdf", tags=["pdf_chat"])
+app.include_router(query_document.router, prefix="/query_pdf", tags=["pdf_chat"])
 
 @app.get("/get-response")
 async def get_response():

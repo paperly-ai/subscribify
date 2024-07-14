@@ -11,7 +11,7 @@ def init_pinecone():
     if 'pdf-chat' not in pc.list_indexes().names():
         pc.create_index(
             name='pdf-chat', 
-            dimension=dimensions, 
+            dimension=768, 
             metric='euclidean',
             spec=ServerlessSpec(
                 cloud='aws',
