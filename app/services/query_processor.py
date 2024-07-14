@@ -9,4 +9,4 @@ class QueryProcessor:
         self.embeddings = GoogleGenerativeAIEmbeddings(model=settings.GOOGLE_EMBEDDING_MODEL, google_api_key=settings.GOOGLE_API_KEY)
 
     def embed_query(self,query_text):
-        return self.embeddings.embed_query(query_text)
+        return self.embeddings.embed_query(query_text,output_dimensionality=1536)
