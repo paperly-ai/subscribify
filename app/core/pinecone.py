@@ -1,21 +1,21 @@
 from app.core.config import settings
 from pinecone import Pinecone, ServerlessSpec
-def init_pinecone():
-    dimensions=1536
+
+def init_pinecone(index_name):
     index_name = "pdf-chat"
 
     pc = Pinecone(
         api_key=settings.PINECONE_API_KEY
     )
 
-    if 'pdf-chat' not in pc.list_indexes().names():
+    if index_name not in pc.list_indexes().names():
         pc.create_index(
-            name='pdf-chat', 
-            dimension=768, 
-            metric='euclidean',
+            name=index_name, 
+            dimension=settings.VECTOR_DIMENSIONS, 
+            metric=settings.PINECONE_METRIC,
             spec=ServerlessSpec(
-                cloud='aws',
-                region='us-east-1'
+                cloud=settings.PINECONE_CLOUD,
+                region=settings.PINCEONCE_REGION
             )
         )
         
