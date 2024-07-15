@@ -1,8 +1,9 @@
 from app.core.config import settings
 from pinecone import Pinecone, ServerlessSpec
+from app.utils.logger import Logger
 
+log=Logger(name=__name__)
 def init_pinecone(index_name):
-    index_name = "pdf-chat"
 
     pc = Pinecone(
         api_key=settings.PINECONE_API_KEY
@@ -18,6 +19,7 @@ def init_pinecone(index_name):
                 region=settings.PINCEONCE_REGION
             )
         )
+        log.info(f"create pinecone instance with index {index_name}")
         
     return pc.Index(index_name)
 

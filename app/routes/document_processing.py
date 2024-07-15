@@ -5,10 +5,11 @@ from app.schemas import schema
 
 router = APIRouter()
 
-@router.post("/upsert_pdf",status_code=status.HTTP_201_CREATED)
+@router.post("/upsert_pdf", status_code=status.HTTP_201_CREATED)
 async def upsert_pdf(request: schema.UpsertPDFRequest):
-    processor=DocumentProcessor()
-    vector = processor.embed_text(request.document_url)
-    pinecone_index = init_pinecone()
-    pinecone_index.upsert(vectors=vector,namespace=request.document_id)
-    return {"detail":"document upserted successfully"}
+    try:
+        processor = DocumentProcessor()
+        processor.upload_to_pinecone(request.document_url, request.document_id)
+        return {"status": "success"}
+    except Exception as e:
+        return HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
