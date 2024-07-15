@@ -25,6 +25,6 @@ class PineconeService:
         """Query the Pinecone index for the top_k nearest vectors."""
         try:
             results = self.index.query(vector=vector, top_k=top_k, include_metadata=True, namespace=namespace)
-            return {"results": results['matches']}
+            return results
         except Exception as e:
             return {"status": "error", "detail": str(e)}
