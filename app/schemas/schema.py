@@ -10,3 +10,6 @@ class QueryPDFRequest(BaseModel):
   query:str
   user_id:str 
 
+class GeminiRequest(BaseModel):
+  text_chunk:str
+  query:str

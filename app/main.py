@@ -3,8 +3,7 @@ from fastapi.responses import StreamingResponse
 import os
 from dotenv import load_dotenv
 import google.generativeai as genai
-from app.routes import document_processing
-from app.routes import query_document
+from app.routes import document_processing,query_document,query_gemini
 
 load_dotenv()
 
@@ -25,6 +24,7 @@ def generate_responses():
 
 app.include_router(document_processing.router, prefix="/process_pdf", tags=["pdf_chat"])
 app.include_router(query_document.router, prefix="/query_pdf", tags=["pdf_chat"])
+app.include_router(query_gemini.router, prefix="/gemini", tags=["gemini_query"])
 
 @app.get("/get-response")
 async def get_response():
