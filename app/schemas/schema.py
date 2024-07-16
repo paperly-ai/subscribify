@@ -13,3 +13,8 @@ class QueryPDFRequest(BaseModel):
 class GeminiRequest(BaseModel):
   text_chunk:str
   query:str
+
+class GeminiStreamRequest(BaseModel):
+  query:str
+  document_id:str
+

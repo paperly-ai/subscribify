@@ -18,10 +18,11 @@ class GeminiServie():
     
   def get_response(self, text_chunk, query_text):
         prompt_template = f"""
-        Answer the question as detailed as possible from the provided context with markdown. If the answer is not in
-        the provided context, just say, "The answer is not available in the context". Do not provide an incorrect answer.\n\n
+
         Context:\n{text_chunk}\n
         Question:\n{query_text}\n
+        Answer the question as detailed as possible from the provided context with markdown . If the answer is not in
+        the provided context, just say, "The answer is not available in the context". Do not provide an incorrect answer.\n\n
         Answer:
         """
         try:
@@ -30,6 +31,25 @@ class GeminiServie():
                 raise Exception("Failed to get a response from the model.")
             self.get_usage_metadata(response)
             return response.text
+        except Exception as e:
+            self.log.error(f"Error generating response: {e}")
+            raise
+    
+  def get_response_stream(self, text_chunk, query_text):
+        prompt_template = f"""
+        Context:\n{text_chunk}\n
+        Question:\n{query_text}\n
+        Answer the question as detailed as possible from the provided context with markdown. If the answer is not in
+        the provided context, just say, "The answer is not available in the context". Do not provide an incorrect answer.\n\n
+        Answer:
+        """
+        
+        try:
+            response = self.model.generate_content([prompt_template], stream=True)
+            if response is None:
+                raise Exception("Failed to get a response from the model.")
+            for chunk in response:
+                yield f"data: {chunk.text}\n\n"
         except Exception as e:
             self.log.error(f"Error generating response: {e}")
             raise

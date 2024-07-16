@@ -17,9 +17,7 @@ class DocumentProcessor:
         document_content = get_document_content_from_url(file_path)
         document_stream = BytesIO(document_content)
         reader = PdfReader(document_stream)
-        text = ""
-        for page in reader.pages:
-            text += page.extract_text()
+        text = "".join(page.extract_text() for page in reader.pages).replace("\n", " ")
         return text
 
     def __get_text_chunks(self, text, chunk_size=1000, chunk_overlap=1000):
@@ -45,5 +43,4 @@ class DocumentProcessor:
         self.log.info("Upserting to pinecone")
         result=self.pineconeService.upsert_document(vectors=vectors,namespace=document_id)
         return result
-
 

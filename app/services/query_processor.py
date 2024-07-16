@@ -2,6 +2,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from app.core.config import settings
 from app.services.pinecone_service import PineconeService
+from app.services.gemini_service import GeminiServie
 from app.utils.logger import Logger
 
 
@@ -10,6 +11,7 @@ class QueryProcessor:
         self.log = Logger(__name__)
         self.log.info("Initializing QueryProcessor")
         self.embeddings = GoogleGenerativeAIEmbeddings(model=settings.GOOGLE_EMBEDDING_MODEL, google_api_key=settings.GOOGLE_API_KEY)
+        self.geminiService=GeminiServie()
         self.pineconeService = PineconeService()
         self.log.info("Initialized embeddings and pinecone service")
 
@@ -34,31 +36,10 @@ class QueryProcessor:
             raise
 
     def max_match_result(self, results):
-        self.log.info("Finding max match result")
-        if not results.get('matches'):
-            self.log.warning("No matches found")
-            return {"results": None}
-
-        max_score = float('-inf')
-        best_result = None
-
+        text=""
         for result in results['matches']:
-            if result["score"] > max_score:
-                max_score = result["score"]
-                best_result = result
-
-        if best_result is None:
-            self.log.warning("No best result found")
-            return {"results": None}
-
-        self.log.info(f"Max score found: {max_score}")
-        return {
-            "max_score": max_score,
-            "best_result": {
-                "score": best_result["score"],
-                "metadata": best_result.get("metadata")
-            }
-        }
+            text+=result["metadata"]["text_chunk"]
+        return text
 
     def get_matches(self, query_text, document_id):
         self.log.info(f"Getting matches for query: {query_text} and document_id: {document_id}")
@@ -71,3 +52,5 @@ class QueryProcessor:
         except Exception as e:
             self.log.error(f"Error getting matches: {e}")
             raise
+    
+         
