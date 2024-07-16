@@ -17,7 +17,7 @@ const MessageList = ({ messages, isLoading }: Props) => {
   }
   if (!messages || messages.length === 0) return null;
   return (
-    <div className="flex  flex-col gap-2 p-4  h-[80vh] overflow-y-scroll">
+    <div className="flex  flex-col gap-2 p-4  h-[76vh] overflow-y-scroll">
       {messages.map((message) => (
         <div
           key={message.id}
@@ -25,7 +25,7 @@ const MessageList = ({ messages, isLoading }: Props) => {
             }`}
         >
           <div
-            className={`rounded-lg px-3 text-sm py-2  ${message.role === "user" ? "bg-blue-500 text-white" : "bg-gray-100 text-black"
+            className={`rounded-lg px-3 text-sm py-2  ${message.role === "user" ? "bg-gray-900 text-white" : "bg-gray-100 text-black"
               }`}
           >
             <p>{message.content}</p>

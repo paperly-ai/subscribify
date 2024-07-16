@@ -59,7 +59,7 @@ const ChatComponent = ({ chatId }: Props) => {
     <div className="relative min-h-screen overflow-scroll" id="message-container">
       {/* header */}
       <div className="sticky top-0 inset-x-0 p-2 bg-white h-[10vh] ">
-        <h3 className="text-lg font-semibold">Chat</h3>
+        <h3 className="text-lg fixed inset-x-0 top-4 md:relative text-center md:text-start font-semibold">Chat</h3>
       </div>
 
       {/* message list */}
@@ -73,7 +73,7 @@ const ChatComponent = ({ chatId }: Props) => {
             placeholder="Ask any question..."
             className="w-full focus:outline-none"
           />
-          <Button className="bg-blue-600 ml-2" type="submit" disabled={isLoading}>
+          <Button className="bg-gray-900 ml-2" type="submit" disabled={isLoading}>
             <Send className="h-4 w-4" />
           </Button>
         </div>

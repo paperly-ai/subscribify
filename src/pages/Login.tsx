@@ -43,6 +43,18 @@ export default function LoginPage() {
                 alt="SRM AP"
               />
             </div>
+            <div className='flex items-center justify-center flex-col h-screen text-center'>
+              <div className="flex items-center">
+                <h1 className="mr-3 md:text-5xl text-3xl font-semibold">Paperly-Ai</h1>
+
+              </div>
+
+              <p className="max-w-xl mt-1 text-lg text-slate-100">
+                Join millions of students, researchers and professionals to instantly
+                answer questions and understand research with AI
+              </p>
+            </div>
+
 
           </div>
         </div>
