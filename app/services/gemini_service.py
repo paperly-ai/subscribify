@@ -17,8 +17,15 @@ class GeminiServie():
             raise
     
   def get_response(self, text_chunk, query_text):
+        prompt_template = f"""
+        Answer the question as detailed as possible from the provided context with markdown. If the answer is not in
+        the provided context, just say, "The answer is not available in the context". Do not provide an incorrect answer.\n\n
+        Context:\n{text_chunk}\n
+        Question:\n{query_text}\n
+        Answer:
+        """
         try:
-            response = self.model.generate_content([text_chunk,query_text])
+            response = self.model.generate_content([prompt_template])
             if response is None:
                 raise Exception("Failed to get a response from the model.")
             self.get_usage_metadata(response)

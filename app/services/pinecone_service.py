@@ -21,7 +21,7 @@ class PineconeService:
         self.index.upsert(vectors=vectors, namespace=namespace)
         self.log.info("upserted vectors successfully")
 
-    def query(self, vector: List[float], top_k: int = 10, namespace: Optional[str] = None):
+    def query(self, vector: List[float], top_k: int = 1, namespace: Optional[str] = None):
         """Query the Pinecone index for the top_k nearest vectors."""
         try:
             results = self.index.query(vector=vector, top_k=top_k, include_metadata=True, namespace=namespace)
