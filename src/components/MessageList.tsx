@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Loader2 } from "lucide-react";
 import { Message } from "@/constants/constants";
 
@@ -8,6 +8,15 @@ type Props = {
 };
 
 const MessageList = ({ messages, isLoading }: Props) => {
+  useEffect(() => {
+    const messageContainer = document.getElementById("message-container");
+    if (messageContainer) {
+      messageContainer.scrollTo({
+        top: messageContainer.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [messages]);
   if (isLoading) {
     return (
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
@@ -17,7 +26,7 @@ const MessageList = ({ messages, isLoading }: Props) => {
   }
   if (!messages || messages.length === 0) return null;
   return (
-    <div className="flex flex-col gap-2 p-4 pb-20  h-[90vh] overflow-y-scroll">
+    <div id="message-container" className="flex flex-col gap-2 p-4 pb-20  h-[90vh] overflow-y-scroll">
       {messages.map((message) => (
         <div
           key={message.id}

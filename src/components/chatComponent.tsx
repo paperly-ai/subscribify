@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "./ui/button";
 import { Send } from "lucide-react";
@@ -9,38 +9,40 @@ import { Message } from "@/constants/constants";
 
 type Props = { chatId: string };
 
+
 const _messages: Message[] = [
   { id: "1", role: "user", content: "Hello!" },
   { id: "2", role: "assistant", content: "Hi there! How can I assist you today?" },
   { id: "3", role: "user", content: "I need help with my project." },
   { id: "4", role: "assistant", content: "Sure, what kind of help do you need?" },
-  { id: "4", role: "assistant", content: "Sure, what kind of help do you need?" },
-  { id: "4", role: "assistant", content: "Sure, what kind of help do you need?" },
-  { id: "4", role: "assistant", content: "Sure, what kind of help do you need?" },
-  { id: "1", role: "user", content: "Hello!" },
-  { id: "2", role: "assistant", content: "Hi there! How can I assist you today?" },
-  { id: "3", role: "user", content: "I need help with my project." },
-  { id: "4", role: "assistant", content: "Sure, what kind of help do you need?" },
-  { id: "4", role: "assistant", content: "Sure, what kind of help do you need?" },
-  { id: "4", role: "assistant", content: "Sure, what kind of help do you need?" },
-  { id: "4", role: "assistant", content: "Sure, what kind of help do you need?" },
-
+  { id: "5", role: "user", content: "Can you provide more details?" },
+  { id: "6", role: "assistant", content: "Certainly, what specific information do you require?" },
+  { id: "7", role: "user", content: "I'm stuck on a coding problem." },
+  { id: "8", role: "assistant", content: "Let's tackle it together. What's the issue?" },
+  { id: "9", role: "user", content: "Thank you for your assistance!" },
+  { id: "10", role: "assistant", content: "You're welcome! Glad I could help." },
+  { id: "11", role: "user", content: "Could you explain this concept to me?" },
+  { id: "12", role: "assistant", content: "Of course! Here's a breakdown of that concept." },
+  { id: "13", role: "user", content: "What tools do you recommend for project management?" },
+  { id: "14", role: "assistant", content: "There are several options. Let's discuss which might suit your needs." },
+  { id: "15", role: "user", content: "How do I improve my coding skills?" },
+  { id: "16", role: "assistant", content: "Practice and learning new techniques regularly can help." },
+  { id: "17", role: "user", content: "What are the latest updates in web development?" },
+  { id: "18", role: "assistant", content: "Let me provide you with some recent advancements." },
+  { id: "19", role: "user", content: "Is there a recommended IDE for beginners?" },
+  { id: "20", role: "assistant", content: "Many beginners find IDEs like Visual Studio Code or IntelliJ IDEA helpful." },
+  { id: "21", role: "user", content: "How do I debug JavaScript code effectively?" },
+  { id: "22", role: "assistant", content: "Using console logs and debugging tools in browsers can be useful." },
+  { id: "23", role: "user", content: "Do you have any tips for writing clean code?" },
+  { id: "24", role: "assistant", content: "Yes, writing modular and well-documented code is key." },
+  { id: "25", role: "user", content: "Thank you for your advice!" },
 ];
-
 const ChatComponent = ({ chatId }: Props) => {
   const [messages, setMessages] = useState(_messages);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const messageContainer = document.getElementById("message-container");
-    if (messageContainer) {
-      messageContainer.scrollTo({
-        top: messageContainer.scrollHeight,
-        behavior: "smooth",
-      });
-    }
-  }, [messages]);
+
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);
@@ -56,9 +58,9 @@ const ChatComponent = ({ chatId }: Props) => {
 
     try {
       setIsLoading(true);
-      const response = await axios.post("/api/chat", { chatId, message: input });
-      const assistantMessage = { id: String(messages.length + 2), role: "assistant", content: response.data.message };
-      setMessages([...messages, newMessage, assistantMessage]);
+      // const response = await axios.post("/api/chat", { chatId, message: input });
+      //const assistantMessage = { id: String(messages.length + 2), role: "assistant", content: response.data.message };
+      setMessages([...messages, newMessage]);
     } catch (error) {
       console.error("Error sending message:", error);
     } finally {
@@ -67,7 +69,7 @@ const ChatComponent = ({ chatId }: Props) => {
   };
 
   return (
-    <div className="relative h-full overflow-scroll" id="message-container">
+    <div className="relative h-full overflow-scroll">
       {/* header */}
       <div className="sticky top-0 hidden lg:block inset-x-0 p-2 bg-white h-[10vh] ">
         <h3 className="text-lg fixed inset-x-0 top-4 md:relative text-center md:text-start font-semibold">Chat</h3>
@@ -89,7 +91,7 @@ const ChatComponent = ({ chatId }: Props) => {
           </Button>
         </div>
       </form>
-    </div>
+    </div >
   );
 };
 
