@@ -1,18 +1,10 @@
 import PDFViewer from "@/components/PdfViewer";
 import ChatComponent from "@/components/chatComponent";
 import ChatSideBar from "@/components/chatsidebar";
-import { Chats } from "@/constants/constants";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { Document } from "@/constants/constants";
-
 import fetchDocuments from "@/api/document";
-
-type Props = {
-  params: {
-    chatId: string;
-  };
-};
 
 
 const ChatPage = () => {
@@ -48,7 +40,7 @@ const ChatPage = () => {
       <div className="flex w-full max-h-screen overflow-scroll">
 
         {/* chat sidebar */}
-        <div className="w-80">
+        <div className="md:w-80">
           <ChatSideBar loading={loading} documents={documents} setId={selectPDF} chatId={id} isPro={false} user={user} logout={logout} />
         </div>
         {/* pdf viewer */}

@@ -21,8 +21,16 @@ export function useAuth() {
 
     try {
       const accessToken = getAccessToken()
+      if (checkTokenExpiry(accessToken)) {
+        navigation('/auth')
+        toast.error('Token Expired');
+        throw new Error('Access token expired.');
+      }
+
       const decodedAccessToken = jwtDecode<IUser>(accessToken)
       setUser(decodedAccessToken)
+
+
 
       navigation('/chat')
     } catch (error) {
@@ -31,6 +39,11 @@ export function useAuth() {
       setLoading(false)
     }
   }
+
+  const checkTokenExpiry = (accessToken: string) => {
+    const { exp } = jwtDecode<{ exp: number }>(accessToken);
+    return Date.now() >= exp * 1000;
+  };
 
   const getAccessToken = (): string => {
     const accessTokenFromUrl = new URLSearchParams(window.location.search).get(
