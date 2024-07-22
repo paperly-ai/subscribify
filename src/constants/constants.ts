@@ -12,3 +12,12 @@ export type Message = {
   role: string;
   content: string;
 };
+
+export interface Document {
+  _id: string;
+  pdfName: string;
+  pdfUrl: string;
+  pdfIndex: string;
+  userId: string;
+  __v: number;
+}

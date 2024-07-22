@@ -7,7 +7,7 @@ import MessageList from "./MessageList";
 import axios from "axios";
 import { Message } from "@/constants/constants";
 
-type Props = { chatId: number };
+type Props = { chatId: string };
 
 const _messages: Message[] = [
   { id: "1", role: "user", content: "Hello!" },

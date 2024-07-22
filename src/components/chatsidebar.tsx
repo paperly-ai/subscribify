@@ -1,11 +1,10 @@
 "use client";
 import { Link } from "react-router-dom";
-import React from "react";
 import { Button } from "./ui/button";
-import { Menu, MessageCircle, MessageCirclePlus, SquarePen } from "lucide-react";
+import { Loader, Menu, MessageCircle, SquarePen } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { UploadDialog } from "./uploadDialog";
-import { Chats } from "@/constants/constants";
+import { Document } from "@/constants/constants";
 import { BsStars } from "react-icons/bs";
 
 import { IUser } from "@/hooks/useAuth";
@@ -13,16 +12,26 @@ import { ProfileCard } from "./profileCard";
 import { Drawer, DrawerContent, DrawerTrigger } from "./ui/drawer";
 
 type Props = {
-  chats: Chats[];
-  chatId: number;
+  documents: Document[];
+  chatId: string;
   isPro: boolean;
   user: IUser | null;
   logout: () => void;
+  loading: boolean;
+  setId: (id: string) => void;
+
 };
 
-const ChatSideBar = ({ chats, chatId, user, logout }: Props) => {
+const ChatSideBar = ({ documents, chatId, user, logout, loading, setId }: Props) => {
   const renderChatList = () => {
-    if (chats.length === 0) {
+    if (loading) {
+      return <div className="flex h-96 items-center justify-center">
+        <p className="text-sm">
+          <Loader />
+        </p>
+      </div>
+    }
+    if (documents.length === 0) {
       return (
         <div className="flex h-96 items-center justify-center">
           <p className="text-sm">
@@ -32,17 +41,17 @@ const ChatSideBar = ({ chats, chatId, user, logout }: Props) => {
       );
     }
 
-    return chats.map((chat) => (
-      <Link key={chat.id} to={`/chat/${chat.id}`}>
+    return documents.map((document: Document) => (
+      <Link key={document._id} to={`/chat/${document._id}`}>
         <div
           className={cn("rounded-lg px-3 py-3 text-gray-500 flex items-center", {
-            "bg-gray-900 text-white": chat.id === chatId,
-            "hover:text-gray-900": chat.id !== chatId,
+            "bg-gray-900 text-white": document._id === chatId,
+            "hover:text-gray-900": document._id !== chatId,
           })}
         >
           <MessageCircle className="mr-2" />
           <p className="w-full overflow-hidden text-sm truncate whitespace-nowrap text-ellipsis">
-            {chat.pdfName}
+            {document.pdfName}
           </p>
         </div>
       </Link>
