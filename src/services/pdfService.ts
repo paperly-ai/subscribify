@@ -10,6 +10,15 @@ export const getAllPDFs = async (userId: string): Promise<IPDF[]> => {
   }
 };
 
+export const getDocById = async (documentId: string): Promise<IPDF | null> => {
+  try {
+    const pdf = await PDF.findById(documentId);
+    return pdf;
+  } catch (error: any) {
+    throw new Error(`Error while fetching PDFs: ${error.message}`);
+  }
+};
+
 export const createPDF = async (pdfData: IpdfFormat): Promise<IPDF> => {
   try {
     const newPDF = new PDF(pdfData);
