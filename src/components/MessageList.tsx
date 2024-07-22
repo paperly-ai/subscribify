@@ -17,7 +17,7 @@ const MessageList = ({ messages, isLoading }: Props) => {
   }
   if (!messages || messages.length === 0) return null;
   return (
-    <div className="flex  flex-col gap-2 p-4  h-[76vh] overflow-y-scroll">
+    <div className="flex flex-col gap-2 p-4 pb-20  h-[90vh] overflow-y-scroll">
       {messages.map((message) => (
         <div
           key={message.id}

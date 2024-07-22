@@ -4,16 +4,26 @@ import { UserSignUpForm } from '@/components/userSignUpForm'
 import { useAuth } from '@/hooks/useAuth'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
 
 
 export default function LoginPage() {
   const { } = useAuth();
+  const navigation = useNavigate();
   const [authForm, setAuthForm] = useState(true);
   const [error, setError] = useState<string | null>(null)
 
   const toggleForms = () => {
     setAuthForm(!authForm);
   }
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      navigation('/chat');
+    }
+  })
+
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -77,14 +87,9 @@ export default function LoginPage() {
                 alt="Paperly AI"
               />
             </div>
-
             <div className="flex flex-col space-y-2 text-center">
-
             </div>
-
             {authForm ? <UserAuthForm /> : <UserSignUpForm />}
-
-
             <p className="px-8 text-center text-sm text-muted-foreground">
               By continuing, you are indicating that you accept our Terms of
               Service and Privacy Policy.

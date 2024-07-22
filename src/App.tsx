@@ -1,8 +1,11 @@
 import HomePage from "@/pages/home";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import LoginPage from "./pages/Login";
 import { Toaster } from "react-hot-toast";
 import ChatPage from "./pages/chat";
+import ChatScreen from "./components/ChatScreen";
+import DefaultChatScreen from "./components/defaultChatScreen";
+import { useAuth } from "./hooks/useAuth";
 
 function App() {
   return (
@@ -11,8 +14,10 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/auth" element={<LoginPage />} />
-        {/* <Route path="/upload-pdf" element={<Dropzone onFileUpload={handleFileUpload} />} /> */}
-        <Route path="/chat" element={<ChatPage />} />
+        <Route path="/chat" element={<ChatPage />}>
+          <Route path="/chat/" element={< DefaultChatScreen />} />
+          <Route path="/chat/:document_id" element={< ChatScreen />} />
+        </Route>
       </Routes>
     </Router>
   );

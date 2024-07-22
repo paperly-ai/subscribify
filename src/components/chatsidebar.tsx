@@ -27,7 +27,7 @@ const ChatSideBar = ({ documents, chatId, user, logout, loading, setId }: Props)
     if (loading) {
       return <div className="flex h-96 items-center justify-center">
         <p className="text-sm">
-          <Loader />
+          <Loader className="animate-spin" />
         </p>
       </div>
     }
@@ -86,7 +86,7 @@ const ChatSideBar = ({ documents, chatId, user, logout, loading, setId }: Props)
         </div>
       </DrawerContent>
 
-      <div className=" h-full left-0 z-10 hidden border-r border-gray-200 bg-white p-2 md:flex md:flex-col justify-between">
+      <div className=" h-screen left-0 z-10 hidden border-r border-gray-200 bg-white p-2 md:flex md:flex-col justify-between">
         <>
           <div className="flex flex-col gap-5">
             <div className="flex flex-col gap-2">

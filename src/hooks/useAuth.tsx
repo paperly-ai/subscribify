@@ -24,15 +24,12 @@ export function useAuth() {
       if (checkTokenExpiry(accessToken)) {
         navigation('/auth')
         toast.error('Token Expired');
+        localStorage.removeItem('accessToken');
         throw new Error('Access token expired.');
       }
 
       const decodedAccessToken = jwtDecode<IUser>(accessToken)
       setUser(decodedAccessToken)
-
-
-
-      navigation('/chat')
     } catch (error) {
       handleFetchError(error)
     } finally {
@@ -76,6 +73,7 @@ export function useAuth() {
     toast.success("Logout successfull")
     navigation('/auth')
   }
+
 
   useEffect(() => {
     fetchData()

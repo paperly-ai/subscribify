@@ -13,7 +13,18 @@ const _messages: Message[] = [
   { id: "1", role: "user", content: "Hello!" },
   { id: "2", role: "assistant", content: "Hi there! How can I assist you today?" },
   { id: "3", role: "user", content: "I need help with my project." },
-  { id: "4", role: "assistant", content: "Sure, what kind of help do you need?" }
+  { id: "4", role: "assistant", content: "Sure, what kind of help do you need?" },
+  { id: "4", role: "assistant", content: "Sure, what kind of help do you need?" },
+  { id: "4", role: "assistant", content: "Sure, what kind of help do you need?" },
+  { id: "4", role: "assistant", content: "Sure, what kind of help do you need?" },
+  { id: "1", role: "user", content: "Hello!" },
+  { id: "2", role: "assistant", content: "Hi there! How can I assist you today?" },
+  { id: "3", role: "user", content: "I need help with my project." },
+  { id: "4", role: "assistant", content: "Sure, what kind of help do you need?" },
+  { id: "4", role: "assistant", content: "Sure, what kind of help do you need?" },
+  { id: "4", role: "assistant", content: "Sure, what kind of help do you need?" },
+  { id: "4", role: "assistant", content: "Sure, what kind of help do you need?" },
+
 ];
 
 const ChatComponent = ({ chatId }: Props) => {
@@ -56,16 +67,16 @@ const ChatComponent = ({ chatId }: Props) => {
   };
 
   return (
-    <div className="relative min-h-screen overflow-scroll" id="message-container">
+    <div className="relative h-full overflow-scroll" id="message-container">
       {/* header */}
-      <div className="sticky top-0 inset-x-0 p-2 bg-white h-[10vh] ">
+      <div className="sticky top-0 hidden lg:block inset-x-0 p-2 bg-white h-[10vh] ">
         <h3 className="text-lg fixed inset-x-0 top-4 md:relative text-center md:text-start font-semibold">Chat</h3>
       </div>
 
       {/* message list */}
       <MessageList messages={messages} isLoading={isLoading} />
 
-      <form onSubmit={handleSubmit} className="sticky bottom-0 inset-x-0 px-2 py-4 bg-white">
+      <form onSubmit={handleSubmit} className="absolute bottom-0 inset-x-0 px-2 py-4 bg-white">
         <div className="flex items-center">
           <Input
             value={input}
