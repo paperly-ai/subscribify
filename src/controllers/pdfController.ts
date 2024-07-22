@@ -23,3 +23,15 @@ export const getDocById = async (req: Request, res: Response): Promise<void> => 
     res.status(500).send(error);
   }
 };
+
+export const deleteDoc = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const user = res.locals.user;
+    const document_id = req.params.id as string;
+    const response = await pdfService.deleteDoc(document_id);
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
