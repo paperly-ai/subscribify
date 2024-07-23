@@ -10,11 +10,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { addDocument } from "@/features/documents/documentSlice";
 import { Loader, PlusCircle } from "lucide-react"
 import { useState, ChangeEvent } from "react";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+
 
 export function UploadDialog() {
+  const dispatch = useDispatch();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [fileName, setFileName] = useState<string>("");
@@ -47,6 +51,8 @@ export function UploadDialog() {
         }
         else {
           dialogClose();
+          console.log(result);
+          dispatch(addDocument(result.data));
         }
       } catch (error: any) {
         setError(error.message);
