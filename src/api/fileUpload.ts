@@ -11,18 +11,18 @@ export const documentUpload = async (file: File) => {
   const token = localStorage.getItem('accessToken');
 
   try {
-    const response = await axios.post(`${SERVER_URL}/api/pdf/upload`, formData, {
+    await axios.post(`${SERVER_URL}/api/pdf/upload`, formData, {
       headers: {
         'Authorization': `Bearer ${token}`
       },
     });
 
     toast.success("Document uploaded successfully");
-    console.log('Upload response:', response.data);
+
     return true;
-  } catch (error) {
+  } catch (error: any) {
     toast.error("Error uploading document");
-    console.error('Upload error:', error);
-    return false; // Optionally handle the error or rethrow it
+
+    throw error;
   }
 };
