@@ -12,10 +12,11 @@ import {
 } from "@/components/ui/dialog"
 import { MdOutlineFileUpload } from "react-icons/md";
 import { documentUpload } from '@/api/fileUpload';
+import { Loader } from 'lucide-react';
 
 export function UploadDialogV2() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -25,10 +26,12 @@ export function UploadDialogV2() {
 
   const handleUpload = async () => {
     if (selectedFile) {
+      setLoading(true);
       const result = await documentUpload(selectedFile);
       if (!result) {
         setSelectedFile(null);
       }
+      setLoading(false);
       DialogClose;
     }
   };
@@ -67,7 +70,7 @@ export function UploadDialogV2() {
         <DialogFooter>
           <div className="flex w-full items-center gap-3 justify-between">
             <Button className="w-full" variant={'destructive'}>Cancel</Button>
-            <Button className="w-full" onClick={handleUpload} disabled={!selectedFile}>Upload</Button>
+            <Button className="w-full" onClick={handleUpload} disabled={!selectedFile}>{loading ? <Loader className='animate-spin' /> : 'Upload'} </Button>
           </div>
         </DialogFooter>
       </DialogContent>
