@@ -1,5 +1,5 @@
 "use client";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Button } from "./ui/button";
 import { Loader, Menu, MessageCircle, SquarePen } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -11,21 +11,31 @@ import { IUser } from "@/hooks/useAuth";
 import { ProfileCard } from "./profileCard";
 import { Drawer, DrawerContent, DrawerTrigger } from "./ui/drawer";
 import { DropdownMenuDoc } from "./DocumentDropDown";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchDocuments, selectDocuments, selectDocumentsStatus } from "@/features/documents/documentSlice";
+import { useEffect } from "react";
+import { AppDispatch } from "@/store";
 
 type Props = {
-  documents: Document[];
-  chatId: string;
   isPro: boolean;
   user: IUser | null;
   logout: () => void;
-  loading: boolean;
-  setId: (id: string) => void;
-
 };
 
-const ChatSideBar = ({ documents, chatId, user, logout, loading, setId }: Props) => {
+const ChatSideBar = ({ user, logout }: Props) => {
+  const { document_id } = useParams();
+  const dispatch = useDispatch<AppDispatch>();
+  const documents = useSelector(selectDocuments);
+  const status = useSelector(selectDocumentsStatus);
+
+  useEffect(() => {
+    dispatch(fetchDocuments());
+  }, [dispatch]);
+
+
+
   const renderChatList = () => {
-    if (loading) {
+    if (status === 'loading') {
       return <div className="flex h-96 items-center justify-center">
         <p className="text-sm">
           <Loader className="animate-spin" />
@@ -46,8 +56,8 @@ const ChatSideBar = ({ documents, chatId, user, logout, loading, setId }: Props)
       <Link key={document._id} to={`/chat/${document._id}`}>
         <div
           className={cn("rounded-lg px-3 py-3 text-gray-500 flex items-center", {
-            "bg-gray-900 text-white": document._id === chatId,
-            "hover:text-gray-900": document._id !== chatId,
+            "bg-gray-900 text-white": document._id === document_id,
+            "hover:text-gray-900": document._id !== document_id,
           })}
         >
           <MessageCircle className="mr-2" />
