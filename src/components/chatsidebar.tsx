@@ -10,6 +10,7 @@ import { BsStars } from "react-icons/bs";
 import { IUser } from "@/hooks/useAuth";
 import { ProfileCard } from "./profileCard";
 import { Drawer, DrawerContent, DrawerTrigger } from "./ui/drawer";
+import { DropdownMenuDoc } from "./DocumentDropDown";
 
 type Props = {
   documents: Document[];
@@ -53,6 +54,7 @@ const ChatSideBar = ({ documents, chatId, user, logout, loading, setId }: Props)
           <p className="w-full overflow-hidden text-sm truncate whitespace-nowrap text-ellipsis">
             {document.pdfName}
           </p>
+          <DropdownMenuDoc document_id={document._id} />
         </div>
       </Link>
     ));

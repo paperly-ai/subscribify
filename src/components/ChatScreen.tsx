@@ -11,7 +11,7 @@ import {
 const ChatScreen = () => {
   const { document_id } = useParams();
   const navigation = useNavigate();
-  const pdf_url = "https://res.cloudinary.com/dhytswwcx/raw/upload/v1719912452/user_pdfs/undefined/xzb1yply70eb8u5s01nx";
+  const pdf_url = "https://res.cloudinary.com/dhytswwcx/raw/upload/v1721663663/user_pdfs/668cb73dc300e993cf7527dc/veowmlocp04pqwum6ifv"
   if (document_id) {
     return (
       <>
