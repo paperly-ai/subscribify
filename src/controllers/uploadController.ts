@@ -28,9 +28,9 @@ export const uploadPDF = async (req: Request, res: Response) => {
       pdfIndex: "123",
       userId: user.userId as string
     };
-    const pdf = pdfService.createPDF(pdfData);
+    const pdf = await pdfService.createPDF(pdfData);
 
-    res.json({ pdf });
+    res.json(pdf);
   } catch (error) {
     res.status(500).json({ message: 'Upload Error', error });
   }
