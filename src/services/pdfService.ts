@@ -1,6 +1,7 @@
 import PDF, { IPDF } from '../models/pdfModel';
 import { IpdfFormat, UpsertDocumentPayload } from '../constants/PdfConstants';
 import { upsertDocumentInPDFStore } from '../client/waffleClient';
+import { createConversation } from './conversationService';
 
 export const getAllPDFs = async (userId: string): Promise<IPDF[]> => {
   try {
@@ -38,6 +39,10 @@ export const createPDF = async (pdfData: IpdfFormat): Promise<IPDF> => {
 
     await upsertDocumentInPDFStore(payload);
     console.log("upserted successfully");
+
+    await createConversation(String(newPDF._id),);
+    console.log("Empty Conversation created successfully");
+
     return newPDF;
   } catch (error: any) {
     throw new Error(`Error while creating PDF: ${error.message}`);
