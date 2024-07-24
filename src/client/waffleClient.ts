@@ -22,9 +22,10 @@ export async function upsertDocumentInPDFStore(payload: UpsertDocumentPayload) {
 
 
 export async function queryDocumentFromPDFStore(payload: QueryDocumentPayload) {
-  const url = `${WAFFLE_SERVER_URI}/query_pdf/query`;
+  const url = `${WAFFLE_SERVER_URI}/gemini/query/invoke`;
   try {
     const response = await axios.post(url, payload);
+    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error('Error querying document:', error);

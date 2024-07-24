@@ -19,9 +19,10 @@ export const getConversationByPdfId = async (pdfId: string) => {
 export const createConversation = async (pdfId: string) => {
   try {
     const messages: IMessage[] = [];
-    const newConversation: IConversation = new Conversation({ pdfId, messages });
+    const newConversation: IConversation = new Conversation({ pdf_id: pdfId, messages });
     await newConversation.save();
   } catch (error: any) {
+    console.log(error.message);
     throw Error(error.message);
   }
 };
@@ -37,6 +38,7 @@ export const updateConversation = async (pdfId: string, message: IMessage): Prom
       { new: true }
     );
   } catch (error: any) {
+    console.log(error.message);
     throw new Error(error.message);
   }
 };
