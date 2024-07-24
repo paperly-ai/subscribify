@@ -9,7 +9,7 @@ export interface Chats {
 
 export type Message = {
   id: string;
-  role: string;
+  sender: string;
   content: string;
 };
 

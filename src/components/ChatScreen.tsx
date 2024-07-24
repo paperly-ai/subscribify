@@ -34,7 +34,7 @@ const ChatScreen = () => {
             </TabsContent>
             <TabsContent value="chat-screen">
               < div className="flex-[3] border-l-4 border-l-slate-200" >
-                <ChatComponent chatId={document_id} />
+                <ChatComponent document_id={document_id} />
               </div >
             </TabsContent>
           </Tabs>
@@ -44,7 +44,7 @@ const ChatScreen = () => {
                 <PDFViewer pdf_url={selectedDocument?.pdfUrl} />
               </div >
               < div className="flex-[3] h-full border-l-4 border-l-slate-200" >
-                <ChatComponent chatId={document_id} />
+                <ChatComponent document_id={document_id} />
               </div >
             </>
           </div>

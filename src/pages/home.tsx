@@ -2,13 +2,8 @@ import { Button } from '@/components/ui/button'
 import { CiLogin } from "react-icons/ci";
 import { Link } from 'react-router-dom';
 import { SlDocs } from "react-icons/sl";
-import toast from 'react-hot-toast';
 
 export default function HomePage() {
-  const notify = () => {
-    toast.error('Hello, this is a error notification!');
-  };
-
   return (
     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
 
@@ -26,10 +21,13 @@ export default function HomePage() {
             </p>
 
             <div className="w-full mt-4 flex items-center justify-center gap-2">
-              <Button onClick={notify}>
-                Docs
-                <SlDocs className="w-4 h-4 ml-2" />
-              </Button>
+              <Link to={'https://lokesh-3.gitbook.io/paperly-ai/'} target='_blank'>
+                <Button>
+                  Docs
+                  <SlDocs className="w-4 h-4 ml-2" />
+                </Button>
+
+              </Link>
               <Link to="/chat">
                 <Button>
                   Get Started!
