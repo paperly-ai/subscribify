@@ -5,8 +5,8 @@ export const queryPDF = async (req: Request, res: Response): Promise<void> => {
   try {
     const user = res.locals.user;
     const { pdfId, query }: { pdfId: string, query: string } = req.body;
-    await queryService.queryWaffle(user.userId, pdfId, query);
-    res.status(200).json();
+    const message = await queryService.queryWaffle(user.userId, pdfId, query);
+    res.status(200).json({ message });
   } catch (error) {
     res.status(500).send(error);
   }

@@ -8,6 +8,7 @@ import { authMiddleWare } from './middleware/authMiddleware';
 import authRouter from './routes/authRoute';
 import pdfRouter from './routes/pdfRoute';
 import queryRouter from './routes/queryRoute';
+import conversationRouter from './routes/conversationRoute';
 
 
 const app = express();
@@ -28,6 +29,7 @@ app.use('/api/users', userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/pdf', pdfRouter);
 app.use('/api/waffle', queryRouter);
+app.use('/api/conversations', conversationRouter);
 
 
 app.listen(port, () => {

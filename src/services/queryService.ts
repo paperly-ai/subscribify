@@ -29,7 +29,7 @@ export const queryWaffle = async (userId: string, pdfId: string, query: string) 
     }
 
     await updateConversation(pdfId, assistantMessage);
-    console.log("update assistant response");
+    return result;
   } catch (error: any) {
     throw Error(error.message);
   }
