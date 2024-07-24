@@ -7,6 +7,7 @@ import connectDB from './config/db';
 import { authMiddleWare } from './middleware/authMiddleware';
 import authRouter from './routes/authRoute';
 import pdfRouter from './routes/pdfRoute';
+import queryRouter from './routes/queryRoute';
 
 
 const app = express();
@@ -26,6 +27,7 @@ app.use('/api/pdf', uploadRouter);
 app.use('/api/users', userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/pdf', pdfRouter);
+app.use('/api/waffle', queryRouter);
 
 
 app.listen(port, () => {

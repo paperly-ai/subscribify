@@ -15,5 +15,4 @@ export interface QueryDocumentPayload {
   user_id: string,
   document_id: string,
   query: string
-
 }
