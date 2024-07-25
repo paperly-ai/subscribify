@@ -1,9 +1,16 @@
-import { queryDocumentFromPDFStore } from "../client/waffleClient";
+import { Readable } from "stream";
+import { queryDocumentFromPDFStore, queryDocumentStream } from "../client/waffleClient";
 import { QueryDocumentPayload } from "../constants/PdfConstants";
 import { IMessage } from "../models/conversations";
 import { updateConversation } from "./conversationService";
 
-export const queryWaffle = async (userId: string, pdfId: string, query: string) => {
+
+interface SSEResponse {
+  data: string;
+  save(): Promise<void>;
+}
+
+export const queryWaffle = async (userId: string, pdfId: string, query: string): Promise<Readable> => {
   try {
     const userMessage: IMessage = {
       sender: "user",
@@ -20,16 +27,42 @@ export const queryWaffle = async (userId: string, pdfId: string, query: string) 
       query: query
     }
 
-    const result = await queryDocumentFromPDFStore(payload);
+    const resultStream =
+      await queryDocumentStream(payload);
+    const readableStream = new Readable({
+      read() { },
+    });
 
-    const assistantMessage: IMessage = {
-      sender: "assistant",
-      content: result,
-      timestamp: new Date()
-    }
 
-    await updateConversation(pdfId, assistantMessage);
-    return result;
+    const reader = resultStream.getReader();
+    let message = "";
+    const readStream = async () => {
+      reader.read().then(async ({ value, done }) => {
+        if (done) {
+          console.log('Stream reading complete.');
+          readableStream.push(null);
+          const assistantMessage: IMessage = {
+            sender: "assistant",
+            content: message,
+            timestamp: new Date()
+          }
+          console.log('Stream reading complete.');
+          await updateConversation(pdfId, assistantMessage);
+          return;
+        }
+        const chunk = new TextDecoder().decode(value);
+        message += chunk.replace("data: ", "");
+        readableStream.push(chunk.replace("data: ", ""));
+        readStream();
+      }).catch(error => {
+        console.error('Error reading stream:', error);
+      });
+    };
+
+
+    readStream();
+
+    return readableStream;
   } catch (error: any) {
     throw Error(error.message);
   }

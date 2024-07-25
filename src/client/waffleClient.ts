@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { UpsertDocumentPayload, QueryDocumentPayload } from '../constants/PdfConstants';
 import { error } from 'console';
+import { Readable } from 'stream';
 
 const WAFFLE_SERVER_URI = process.env.WAFFLE_AI_URI
 
@@ -32,3 +33,22 @@ export async function queryDocumentFromPDFStore(payload: QueryDocumentPayload) {
     throw error;
   }
 }
+
+export async function queryDocumentStream(payload: QueryDocumentPayload): Promise<ReadableStream> {
+
+  const url = `${WAFFLE_SERVER_URI}/gemini/query/stream`;
+  try {
+    const response: any = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+    return response.body as ReadableStream;
+  } catch (error) {
+    console.error('Error querying document:', error);
+    throw error;
+  }
+}
+
