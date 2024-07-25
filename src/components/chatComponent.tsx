@@ -14,8 +14,6 @@ const ChatComponent = ({ document_id }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [loading, setLoading] = useState(false);
 
-
-
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);
   };
@@ -48,13 +46,30 @@ const ChatComponent = ({ document_id }: Props) => {
 
     try {
       setLoading(true);
+      let assistMessage = { id: String(new Date()), sender: "assistant", content: "" };
+      await queryDocument(document_id, input, (response, error) => {
 
-      const result = await queryDocument(document_id, input);
-      console.log(result);
+        if (error) {
+          console.error(error); ``
+          return;
+        }
 
-      const assistMessage = { id: String(result.length + 1), sender: "assistant", content: result };
+        if (loading) {
+          setLoading(false);
+        }
+        assistMessage.content += response;
+        setMessages(prevMessages => {
+          const index = prevMessages.findIndex(msg => msg.id === assistMessage.id);
 
-      setMessages(prevMessages => [...prevMessages, assistMessage]);
+          if (index !== -1) {
+            const updatedMessages = [...prevMessages];
+            updatedMessages[index] = assistMessage;
+            return updatedMessages;
+          } else {
+            return [...prevMessages, assistMessage];
+          }
+        });
+      });
     } catch (error) {
       console.error("Error sending message:", error);
     } finally {
