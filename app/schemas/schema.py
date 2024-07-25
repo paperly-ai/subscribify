@@ -15,6 +15,7 @@ class GeminiRequest(BaseModel):
   query:str
 
 class GeminiStreamRequest(BaseModel):
+  user_id:str
   query:str
   document_id:str
 
