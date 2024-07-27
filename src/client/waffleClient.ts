@@ -6,7 +6,7 @@ import { Readable } from 'stream';
 const WAFFLE_SERVER_URI = process.env.WAFFLE_AI_URI
 
 export async function upsertDocumentInPDFStore(payload: UpsertDocumentPayload) {
-  const url = `${WAFFLE_SERVER_URI}/process_pdf/upsert_pdf`;
+  const url = `${WAFFLE_SERVER_URI}/process_pdf/upsert_pdf/faiss`;
   try {
     const response = await axios.post(url, payload);
     if (response.status == 201) {
@@ -36,7 +36,7 @@ export async function queryDocumentFromPDFStore(payload: QueryDocumentPayload) {
 
 export async function queryDocumentStream(payload: QueryDocumentPayload): Promise<ReadableStream> {
 
-  const url = `${WAFFLE_SERVER_URI}/gemini/query/stream`;
+  const url = `${WAFFLE_SERVER_URI}/gemini/query/faiss/stream`;
   try {
     const response: any = await fetch(url, {
       method: 'POST',
