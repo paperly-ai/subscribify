@@ -8,3 +8,4 @@ fastapi[all]
 pinecone-client
 requests
 pinecone
+faiss-cpu
