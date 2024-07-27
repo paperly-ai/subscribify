@@ -39,11 +39,11 @@ class GeminiServie():
         prompt_template = f"""
         Context:\n{text_chunk}\n
         Question:\n{query_text}\n
-        Answer the question as detailed as possible from the provided context with markdown .If the context is noisy try to answer as best as you can. If the answer is not in
-        the provided context, just say, "The possible answer can be " provide your solution. Do not provide an incorrect answer. Do not complain about the text quality.return response without markdown\n\n
+        Answer the question as detailed as possible from the provided context. If the context is noisy try to answer as best as you can. If the answer is not in
+        the provided context, just say, "The possible answer can be " provide your solution. Do not provide an incorrect answer. Do not complain about the text quality.\n\n
         Answer:
         """
-        
+        print(text_chunk)
         try:
             response = self.model.generate_content([prompt_template], stream=True)
             if response is None:

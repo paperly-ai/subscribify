@@ -2,7 +2,7 @@ import os
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings 
 import google.generativeai as genai
-from langchain.vectorstores import FAISS
+from langchain_community.vectorstores import FAISS
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate
@@ -45,33 +45,24 @@ class FaissService():
         Question:\n{question}\n
         Answer:
         """
-        model = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0.3)
+        model = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0.3,stream=True)
         prompt = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
         chain = load_qa_chain(model, chain_type="stuff", prompt=prompt)
         return chain
 
-    def process_user_input(self,document_id, user_question,):
-        self.vector_store_path=f"{document_id}"
+    def process_user_input(self,document_id, user_question):
+        self.vector_store_path=f"./{document_id}"
         embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
         vector_store = FAISS.load_local(self.vector_store_path, embeddings,allow_dangerous_deserialization=True)
         docs = vector_store.similarity_search(user_question)
-        chain = self.get_conversational_chain()
-        response = chain({"input_documents": docs, "question": user_question}, return_only_outputs=True)
-        return response
+        return docs
 
     def get_vector_store(self,text_chunks):
       embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
       vector_store = FAISS.from_texts(text_chunks, embedding=embeddings)
       vector_store.save_local(self.vector_store_path)
-    
-    def process_user_input(self, user_question):
-        embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
-        vector_store = FAISS.load_local(self.vector_store_path, embeddings,allow_dangerous_deserialization=True)
-        docs = vector_store.similarity_search(user_question)
-        chain = self.get_conversational_chain()
-        response = chain({"input_documents": docs, "question": user_question}, return_only_outputs=True)
-        return response
-    
+
+
     def upsert_docs(self,document_id,pdf_url):
         self.vector_store_path=f"{document_id}"
         texts=self.__get_document_text(file_path=pdf_url)
