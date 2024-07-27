@@ -28,9 +28,9 @@ const MessageList = ({ messages, isLoading, loading }: Props) => {
   if (!messages || messages.length === 0) return null;
   return (
     <div id="message-container" className="flex flex-col gap-2 p-4 pb-20  h-[90vh] overflow-y-scroll">
-      {messages.map((message) => (
+      {messages.map((message, index) => (
         <div
-          key={message.id}
+          key={index}
           className={`flex ${message.sender === "user" ? "justify-end pl-10" : "justify-start pr-10"
             }`}
         >
