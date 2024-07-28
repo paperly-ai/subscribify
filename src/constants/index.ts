@@ -20,12 +20,12 @@ export const navigation: NavigationItem[] = [
   },
   {
     id: "2",
-    title: "How to use",
+    title: "Integration",
     url: "#how-to-use",
   },
   {
     id: "3",
-    title: "Roadmap",
+    title: "Documentation",
     url: "#roadmap",
   },
   {
