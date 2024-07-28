@@ -28,10 +28,10 @@ const Header = () => {
 
   return (
     <div
-      className={`flex items-center pt-5 px-2  justify-center z-100 top-0    z-50 absolute inset-x-0    lg:bg-n-8/90 lg:backdrop-blur-sm ${openNavigation ? "bg-n-8" : "bg-n-8/90 backdrop-blur-sm"
+      className={`flex items-center pt-5 px-2  justify-center z-100 top-0    z-50 fixed inset-x-0    lg:bg-n-8/90 ${openNavigation ? "bg-n-8 bg-white" : ""
         }`}
     >
-      <div className="flex border  justify-between rounded-xl w-full md:max-w-[1200px] items-center px-2">
+      <div className="flex border bg-white  justify-between rounded-xl w-full md:max-w-[1200px] items-center px-2">
 
         <Link className="flex uppercase items-center justify-center gap-2 ml-2" to="/">
           <img src={"/icon.png"} width={20} height={20} alt="Paperly-ai" />

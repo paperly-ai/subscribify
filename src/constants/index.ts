@@ -1,4 +1,3 @@
-// Define the interface for a navigation item
 export interface NavigationItem {
   id: string;
   title: string;
@@ -6,7 +5,6 @@ export interface NavigationItem {
   onlyMobile?: boolean; // optional property
 }
 
-// Define the navigation array using the NavigationItem interface
 export const navigation: NavigationItem[] = [
   {
     id: "0",
@@ -16,7 +14,7 @@ export const navigation: NavigationItem[] = [
   {
     id: "1",
     title: "Pricing",
-    url: "#pricing",
+    url: "/#pricing",
   },
   {
     id: "2",
@@ -26,7 +24,7 @@ export const navigation: NavigationItem[] = [
   {
     id: "3",
     title: "Documentation",
-    url: "#roadmap",
+    url: "https://lokesh-3.gitbook.io/paperly-ai",
   },
   {
     id: "4",
