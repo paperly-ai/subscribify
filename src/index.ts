@@ -9,6 +9,7 @@ import authRouter from './routes/authRoute';
 import pdfRouter from './routes/pdfRoute';
 import queryRouter from './routes/queryRoute';
 import conversationRouter from './routes/conversationRoute';
+import subscriptionRouter from './routes/subscriptionRoute'
 
 
 const app = express();
@@ -30,6 +31,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/pdf', pdfRouter);
 app.use('/api/waffle', queryRouter);
 app.use('/api/conversations', conversationRouter);
+app.use('/api/subscriptions', subscriptionRouter);
 
 
 app.listen(port, () => {

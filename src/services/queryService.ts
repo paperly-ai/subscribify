@@ -51,8 +51,8 @@ export const queryWaffle = async (userId: string, pdfId: string, query: string):
           return;
         }
         const chunk = new TextDecoder().decode(value);
-        message += chunk.replace("data: ", "");
-        readableStream.push(chunk.replace("data: ", ""));
+        message += chunk.replace("data:", "");
+        readableStream.push(chunk.replace("data:", ""));
         readStream();
       }).catch(error => {
         console.error('Error reading stream:', error);
