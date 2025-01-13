@@ -1,0 +1,11 @@
+google-generativeai
+python-dotenv
+langchain
+PyPDF2
+langchain_google_genai
+langchain-community
+fastapi[all]
+pinecone-client
+requests
+pinecone
+faiss-cpu
